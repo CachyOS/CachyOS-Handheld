@@ -58,6 +58,12 @@ You will find kernel level tweaks to add on the cachyos site.
 
 Install your choice of controller manager tdp managment etc. Keep in mind these can override the kernal pstate!
 
+I recommend HHD with the desktop ui 
+
+# curl -L https://github.com/hhd-dev/hhd/raw/master/install.sh | sh
+# yay -S hhd-ui
+
+
 Cachyos has a very useful kernel manager in Applications
 its recommended to install the BORE LTO for fastest gaming performace but your free to experiment.
 

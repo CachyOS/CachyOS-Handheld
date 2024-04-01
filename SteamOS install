@@ -9,11 +9,11 @@ You must use Plasma desktop.
 After install you have to do the following
 # sudo systemctl enable --now bluetooth (go to bluetooth on desktop and configure to enable on boot to ensure it always starts.
 # sudo pacman -S yay
-# sudo yay -S steam
-# sudo yay -S mangohud
-# sudo yay -S qt5-tools
-# sudo yay -S qt6-tools
-# sudo yay gamescope-session-steam-git
+#  yay -S steam
+#  yay -S mangohud
+#  yay -S qt5-tools
+#  yay -S qt6-tools
+#  yay gamescope-session-steam-git
 # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 You must now login to your steam account.

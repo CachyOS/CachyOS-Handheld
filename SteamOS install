@@ -1,9 +1,9 @@
-Download cachyos for here 
+Download cachyos from here 
 
 # https://cachyos.org/download/
 
 During install it will ask what bootloader to use i recommend systemd-boot its the fastest.
-Choose your file system i recommend the default
+Choose your file system i recommend the default.
 You must use Plasma desktop.
 
 After install you have to do the following
@@ -42,7 +42,15 @@ There are alot of tweaks that can be done to speed up the kernel its good to che
 
 If your not used to systemd-boot your kernel cmd for boot is located at \BOOT\Loader\entries if you add anything to the kernel parameters.
 
-useful command:
+# useful info!
+
+New Asusctl!
+# git clone https://gitlab.com/asus-linux/asusctl.git
+open terminal in folder you cloned.
+# make
+Then
+# sudo make install
+
 # sudo sdboot-manage gen
 (saves any changes to boot loader)
 

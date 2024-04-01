@@ -1,1 +1,57 @@
+Download cachyos for here 
 
+# https://cachyos.org/download/
+
+During install it will ask what bootloader to use i recommend systemd-boot its the fastest.
+Choose your file system i recommend the default
+You must use Plasma desktop.
+
+After install you have to do the following
+# sudo systemctl enable --now bluetooth (go to bluetooth on desktop and configure to enable on boot to ensure it always starts.
+# sudo pacman -S yay
+# sudo yay -S steam
+# sudo yay -S mangohud
+# sudo yay -S qt5-tools
+# sudo yay -S qt6-tools
+# sudo yay gamescope-session-steam-git
+# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+You must now login to your steam account.
+
+Go to show hidden files home\.steam\registry.vdf
+look for language it will state the language in two diffrent places. Directly after the 2nd instance press enter to create a space.
+Type
+# "CompletedOOBE" "1"   
+Save and exit.
+
+Download the Steam-Deckify contents to a folder, open a termainal inside the folder.
+# sudo makepkg -si
+
+You will now have Return to gamemode in your applications
+
+Goto settings type sddm select login then behaviour(top right)
+Make sure  user auto log in and relogin after log out is selected and select plasma one shot from the drop down menu.
+
+Reboot you should log into steam if not type password and if you go to desktop just click return to game mode you will be good.
+
+Problems you might get.
+If wifi in steam is showing disconnected go to wifi in steam turn off and then back on, it will ask for password, enter it.
+Goto power restart steam, fixed.
+
+There are alot of tweaks that can be done to speed up the kernel its good to check out the cachyos website.
+
+If your not used to systemd-boot your kernel cmd for boot is located at \BOOT\Loader\entries if you add anything to the kernel parameters.
+
+useful command:
+# sudo sdboot-manage gen
+(saves any changes to boot loader)
+
+You will find kernel level tweaks to add on the cachyos site.
+
+Install your choice of controller manager tdp managment etc. Keep in mind these can override the kernal pstate!
+
+Cachyos has a very useful kernel manager in Applications
+its recommended to install the BORE LTO for fastest gaming performace but your free to experiment.
+
+Huge thank you to the CachyOS team for making this Awesome OS
+and to NeroReflex for his work on Steam-Deckify

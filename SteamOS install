@@ -9,12 +9,7 @@ You must use Plasma desktop.
 After install you have to do the following
 # sudo systemctl enable --now bluetooth (go to bluetooth on desktop and configure to enable on boot to ensure it always starts.
 # sudo pacman -S yay
-#  yay -S steam
-#  yay -S mangohud
-#  yay -S qt5-tools
-#  yay -S qt6-tools
-#  yay -S inputplumber-git
-#  yay gamescope-session-steam-git
+#  yay -S steam mangohud qt5-tools qt6-tools inputplumber-git gamescope-session-steam-git
 #  sudo systemctl enable --now inputplumber 
 # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 

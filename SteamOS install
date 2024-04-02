@@ -13,7 +13,9 @@ After install you have to do the following
 #  yay -S mangohud
 #  yay -S qt5-tools
 #  yay -S qt6-tools
+#  yay -S inputplumber-git
 #  yay gamescope-session-steam-git
+#  sudo systemctl enable --now inputplumber 
 # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 You must now login to your steam account.
@@ -56,12 +58,6 @@ Then
 
 You will find kernel level tweaks to add on the cachyos site.
 
-Install your choice of controller manager tdp managment etc. Keep in mind these can override the kernal pstate!
-
-I recommend HHD with the desktop ui 
-
-# curl -L https://github.com/hhd-dev/hhd/raw/master/install.sh | sh
-# yay -S hhd-ui
 
 
 Cachyos has a very useful kernel manager in Applications

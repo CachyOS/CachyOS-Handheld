@@ -18,12 +18,14 @@ You can grab the latest ISO image of CachyOS from the following sources:
      ```bash
      sudo systemctl enable --now bluetooth
      ```
+     <button onclick="navigator.clipboard.writeText('sudo systemctl enable --now bluetooth')">Copy</button>
 
    - **Install Additional Packages**:
      Install the following packages using **yay**:
      ```bash
      yay -S steam mangohud qt5-tools qt6-tools gamescope-session-steam-git
      ```
+     <button onclick="navigator.clipboard.writeText('yay -S steam mangohud qt5-tools qt6-tools gamescope-session-steam-git')">Copy</button>
 
    - **InputPlumber**:
      Clone the InputPlumber repository, compile, and install it:
@@ -34,6 +36,7 @@ You can grab the latest ISO image of CachyOS from the following sources:
      make install
      sudo systemctl enable --now inputplumber
      ```
+     <button onclick="navigator.clipboard.writeText('git clone https://github.com/ShadowBlip/InputPlumber.git\ncd InputPlumber\nmake\nmake install\nsudo systemctl enable --now inputplumber')">Copy</button>
 
    - **Steam Configuration**:
      - Log in to your Steam account.
@@ -43,12 +46,14 @@ You can grab the latest ISO image of CachyOS from the following sources:
        ```
        "CompletedOOBE" "1"
        ```
+       <button onclick="navigator.clipboard.writeText('"CompletedOOBE" "1"')">Copy</button>
 
    - **Steam-Deckify**:
      Download the Steam-Deckify contents, open a terminal in the folder, and run:
      ```bash
      sudo makepkg -si
      ```
+     <button onclick="navigator.clipboard.writeText('sudo makepkg -si')">Copy</button>
 
    - **SDDM Settings**:
      - In system settings, type "sddm" and select "Login Screen."

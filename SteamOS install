@@ -46,7 +46,7 @@ If your not used to systemd-boot your kernel cmd for boot is located at \BOOT\Lo
 New Asusctl!
 # git clone https://gitlab.com/asus-linux/asusctl.git
 open terminal in folder you cloned.
-# make
+# make build
 Then
 # sudo make install
 

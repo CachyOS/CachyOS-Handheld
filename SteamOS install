@@ -1,74 +1,73 @@
-Download cachyos from here 
+# CachyOS Installation Guide
 
-# https://cachyos.org/download/
+## Download CachyOS
+You can grab the latest ISO image of CachyOS from the following sources:
+- CachyOS Mirror
+- SourceForge
 
-Use online installer
-During install it will ask what bootloader to use i recommend systemd-boot its the fastest.
-Choose your file system i recommend the default.
-You must use Plasma desktop.
+## Installation Process
+1. Choose your bootloader during installation:
+   - We recommend using **systemd-boot** for faster boot times.
+   - Other options: **Grub** or **rEFInd**.
 
-After install you have to do the following
-# sudo systemctl enable --now bluetooth (go to bluetooth on desktop and configure to enable on boot to ensure it always starts.
-# sudo pacman -S yay
-# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-# sudo pacman -S base-devel
-# yay -S steam 
-# yay -S mangohud 
-# yay -S qt5-tools
-# yay -S qt6-tools
-# yay -S gamescope-session-steam-git
-# git clone https://github.com/ShadowBlip/InputPlumber.git ```
-Open downloaded folder, open terminal and type-
-#  make
-Then 
-#  make install
-#  sudo systemctl enable --now inputplumber 
+2. Post-Installation Steps:
+   - **Bluetooth Configuration**:
+     Enable Bluetooth on boot:
+     ```bash
+     sudo systemctl enable --now bluetooth
+     ```
 
+   - **Install Additional Packages**:
+     Install the following packages using **yay**:
+     ```bash
+     yay -S steam mangohud qt5-tools qt6-tools gamescope-session-steam-git
+     ```
 
-You must now login to your steam account.
+   - **InputPlumber**:
+     Clone the InputPlumber repository, compile, and install it:
+     ```bash
+     git clone https://github.com/ShadowBlip/InputPlumber.git
+     cd InputPlumber
+     make
+     make install
+     sudo systemctl enable --now inputplumber
+     ```
 
-Go to show hidden files home\.steam\registry.vdf
-look for language it will state the language in two diffrent places. Directly after the 2nd instance press enter to create a space.
-Type
-# "CompletedOOBE" "1"   
-Save and exit.
+   - **Steam Configuration**:
+     - Log in to your Steam account.
+     - Edit the `home/.steam/registry.vdf` file (a hidden file).
+     - Look for the "language" entry and add a space after the second instance.
+     - Add the line:
+       ```
+       "CompletedOOBE" "1"
+       ```
 
-Download the Steam-Deckify contents to a folder, open a termainal inside the folder.
-# sudo makepkg -si
+   - **Steam-Deckify**:
+     Download the Steam-Deckify contents, open a terminal in the folder, and run:
+     ```bash
+     sudo makepkg -si
+     ```
 
-You will now have Return to gamemode in your applications
+   - **SDDM Settings**:
+     - In system settings, type "sddm" and select "Login Screen."
+     - Under "Behavior" (top right), ensure "User Auto-Log In" and "Relogin after Log Out" are selected.
+     - Choose "Plasma One Shot" from the drop-down menu.
 
-Goto settings type sddm select login then behaviour(top right)
-Make sure  user auto log in and relogin after log out is selected and select plasma one shot from the drop down menu.
-You will get a warning about KDE wallet click on it and change password, leave it blank and press enter. this will make sure wifi password is not required again on boot.
-Reboot you should log into steam if not type password and if you go to desktop just click return to game mode you will be good.
+   - **KDE Wallet Warning**:
+     You'll receive a warning about KDE wallet. Change the password (leave it blank) to avoid requiring the Wi-Fi password on boot.
 
-Problems you might get.
-If wifi in steam is showing disconnected go to wifi in steam turn off and then back on, it will ask for password, enter it.
-Goto power restart steam, fixed.
+   - **Reboot**:
+     Reboot your system. You should log into Steam, and if you end up on the desktop, simply click "Return to Game Mode."
 
-There are alot of tweaks that can be done to speed up the kernel its good to check out the cachyos website.
+## Troubleshooting
+- If Wi-Fi in Steam shows as disconnected, turn it off and then back on. It will prompt for the password.
+- For additional performance tweaks, explore kernel-level settings on the CachyOS site.
 
-If your not used to systemd-boot your kernel cmd for boot is located at \BOOT\Loader\entries if you add anything to the kernel parameters.
+## Additional Info
+- **Asusctl**: Clone the Asusctl repository, build, and install it:
+  ```bash
+  git clone https://gitlab.com/asus-linux/asusctl.git
+  cd asusctl
+  make build
+  sudo make install
 
-# Useful info!
-
-New Asusctl!
-# git clone https://gitlab.com/asus-linux/asusctl.git
-open terminal in folder you cloned.
-# make build
-Then
-# sudo make install
-
-# sudo sdboot-manage gen
-(saves any changes to boot loader)
-
-You will find kernel level tweaks to add on the cachyos site.
-
-
-
-Cachyos has a very useful kernel manager in Applications
-its recommended to install the bore lto for fastest gaming performace but your free to experiment.
-
-Huge thank you to the CachyOS team for making this Awesome OS
-and to NeroReflex for his work on Steam-Deckify

@@ -2,6 +2,7 @@ Download cachyos from here
 
 # https://cachyos.org/download/
 
+Use online installer
 During install it will ask what bootloader to use i recommend systemd-boot its the fastest.
 Choose your file system i recommend the default.
 You must use Plasma desktop.
@@ -10,8 +11,17 @@ After install you have to do the following
 # sudo systemctl enable --now bluetooth (go to bluetooth on desktop and configure to enable on boot to ensure it always starts.
 # sudo pacman -S yay
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-#  yay -S steam mangohud qt5-tools qt6-tools inputplumber-git gamescope-session-steam-git
+# sudo pacman -S base-devel
+#  yay -S steam 
+#  yay -S mangohud 
+#  yay -S qt5-tools
+#  yay -S qt6-tools
+#  yay -S gamescope-session-steam-git
+#  git clone https://github.com/ShadowBlip/InputPlumber.git
+Open downloaded folder, open terminal and type-
+#  make
+Then 
+#  make install
 #  sudo systemctl enable --now inputplumber 
 
 
@@ -30,7 +40,7 @@ You will now have Return to gamemode in your applications
 
 Goto settings type sddm select login then behaviour(top right)
 Make sure  user auto log in and relogin after log out is selected and select plasma one shot from the drop down menu.
-
+You will get a warning about KDE wallet click on it and change password, leave it blank and press enter. this will make sure wifi password is not required again on boot.
 Reboot you should log into steam if not type password and if you go to desktop just click return to game mode you will be good.
 
 Problems you might get.
@@ -41,7 +51,7 @@ There are alot of tweaks that can be done to speed up the kernel its good to che
 
 If your not used to systemd-boot your kernel cmd for boot is located at \BOOT\Loader\entries if you add anything to the kernel parameters.
 
-# useful info!
+# Useful info!
 
 New Asusctl!
 # git clone https://gitlab.com/asus-linux/asusctl.git
@@ -58,7 +68,7 @@ You will find kernel level tweaks to add on the cachyos site.
 
 
 Cachyos has a very useful kernel manager in Applications
-its recommended to install the BORE LTO for fastest gaming performace but your free to experiment.
+its recommended to install the bore lto for fastest gaming performace but your free to experiment.
 
 Huge thank you to the CachyOS team for making this Awesome OS
 and to NeroReflex for his work on Steam-Deckify

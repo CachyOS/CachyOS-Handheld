@@ -6,11 +6,13 @@ You can grab the latest ISO image of CachyOS from the following sources:
 - SourceForge
 
 ## Installation Process
+
 1. Choose your bootloader during installation:
    - We recommend using **systemd-boot** for faster boot times.
    - Other options: **Grub** or **rEFInd**.
 
 2. Post-Installation Steps:
+
    - **Bluetooth Configuration**:
      Enable Bluetooth on boot:
      ```bash

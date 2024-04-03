@@ -57,6 +57,38 @@ You can grab the latest ISO image of CachyOS from the following sources:
 
    - **SDDM Settings**:
      - In system settings, type "sddm" and select "Login Screen."
-     - Under "Behavior" (top right​⬤
+     - Under "Behavior" (top right), ensure "User Auto-Log In" and "Relogin after Log Out" are selected.
+     - Choose "Plasma One Shot" from the drop-down menu.
 
+   - **KDE Wallet Warning**:
+     You'll receive a warning about KDE wallet. Change the password (leave it blank) to avoid requiring the Wi-Fi password on boot.
+
+   - **Reboot**:
+     Reboot your system. You should log into Steam, and if you end up on the desktop, simply click "Return to Game Mode."
+
+## Troubleshooting
+- If Wi-Fi in Steam shows as disconnected, turn it off and then back on. It will prompt for the password.
+- For additional performance tweaks, explore kernel-level settings on the CachyOS site.
+
+## Additional Info
+- **Asusctl**: Clone the Asusctl repository, build, and install it:
+  ```bash
+  git clone https://gitlab.com/asus-linux/asusctl.git
+  cd asusctl
+  make build
+  sudo make install
+Copy
+<script>
+document.querySelectorAll('a[href="#"]').forEach(anchor => {
+    anchor.onclick = () => {
+        const codeBlock = anchor.parentNode.querySelector('code');
+        if (codeBlock) {
+            const text = codeBlock.textContent;
+            navigator.clipboard.writeText(text);
+            alert('Code copied to clipboard!');
+        }
+        return false;
+    };
+});
+</script>
 

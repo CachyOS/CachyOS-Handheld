@@ -10,7 +10,7 @@ You must use Plasma desktop.
 After install you have to do the following
 # sudo systemctl enable --now bluetooth (go to bluetooth on desktop and configure to enable on boot to ensure it always starts.
 # sudo pacman -S yay
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # sudo pacman -S base-devel
 #  yay -S steam 
 #  yay -S mangohud 

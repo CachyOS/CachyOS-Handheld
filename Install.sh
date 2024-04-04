@@ -24,7 +24,7 @@ configure_bluetooth() {
 
 # Install additional packages
 install_additional_packages() {
-    execute_command "yay -S steam mangohud-git lib32-mangohud-git qt5-tools qt6-tools gamescope-session-steam-git inputplumber-git chimeraos-device-quirks-git" true
+    execute_command "yay -S steam gamescope mangohud-git lib32-mangohud-git qt5-tools qt6-tools gamescope-session-steam-git inputplumber-git chimeraos-device-quirks-git" true
 }
 
 # InputPlumber setup

@@ -2,93 +2,15 @@
 
 ## Download CachyOS
 You can grab the latest ISO image of CachyOS from the following sources:
-- CachyOS Mirror
-- SourceForge
+-  
 
 ## Installation Process
-
-1. Choose your bootloader during installation:
-   - We recommend using **systemd-boot** for faster boot times.
-   - Other options: **Grub** or **rEFInd**.
-
-2. Post-Installation Steps:
-
-   - **Bluetooth Configuration**:
-     Enable Bluetooth on boot:
-     ```bash
-     sudo systemctl enable --now bluetooth
-     ```
-     [Copy](#)
-
-   - **Install Additional Packages**:
-     Install the following packages using **yay**:
-     ```bash
-     yay -S steam mangohud qt5-tools qt6-tools gamescope-session-steam-git
-     ```
-     [Copy](#)
-
-   - **InputPlumber**:
-     Clone the InputPlumber repository, compile, and install it:
-     ```bash
-     git clone https://github.com/ShadowBlip/InputPlumber.git
-     cd InputPlumber
-     make
-     make install
-     sudo systemctl enable --now inputplumber
-     ```
-     [Copy](#)
-
-   - **Steam Configuration**:
-     - Log in to your Steam account.
-     - Edit the `home/.steam/registry.vdf` file (a hidden file).
-     - Look for the "language" entry and add a space after the second instance.
-     - Add the line:
-       ```
-       "CompletedOOBE" "1"
-       ```
-       [Copy](#)
-
-   - **Steam-Deckify**:
-     Download the Steam-Deckify contents, open a terminal in the folder, and run:
-     ```bash
-     sudo makepkg -si
-     ```
-     [Copy](#)
-
-   - **SDDM Settings**:
-     - In system settings, type "sddm" and select "Login Screen."
-     - Under "Behavior" (top right), ensure "User Auto-Log In" and "Relogin after Log Out" are selected.
-     - Choose "Plasma One Shot" from the drop-down menu.
-
-   - **KDE Wallet Warning**:
-     You'll receive a warning about KDE wallet. Change the password (leave it blank) to avoid requiring the Wi-Fi password on boot.
-
-   - **Reboot**:
-     Reboot your system. You should log into Steam, and if you end up on the desktop, simply click "Return to Game Mode."
+Follow onscreen instructions.
 
 ## Troubleshooting
 - If Wi-Fi in Steam shows as disconnected, turn it off and then back on. It will prompt for the password.
 - For additional performance tweaks, explore kernel-level settings on the CachyOS site.
 
-## Additional Info
-- **Asusctl**: Clone the Asusctl repository, build, and install it:
-  ```bash
-  git clone https://gitlab.com/asus-linux/asusctl.git
-  cd asusctl
-  make build
-  sudo make install
-Copy
-<script>
-document.querySelectorAll('a[href="#"]').forEach(anchor => {
-    anchor.onclick = () => {
-        const codeBlock = anchor.parentNode.querySelector('code');
-        if (codeBlock) {
-            const text = codeBlock.textContent;
-            navigator.clipboard.writeText(text);
-            alert('Code copied to clipboard!');
-        }
-        return false;
-    };
-});
-</script>
+
+
 

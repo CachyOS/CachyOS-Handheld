@@ -7,6 +7,10 @@ You can grab the latest ISO image of CachyOS from the following sources:
 ## Installation Process
 Follow onscreen instructions.
 
+Burn iso
+
+During setup select systemd-boot and online installer.
+
 ## Troubleshooting
 - If Wi-Fi in Steam shows as disconnected, turn it off and then back on. It will prompt for the password.
 - For additional performance tweaks, explore kernel-level settings on the CachyOS site.

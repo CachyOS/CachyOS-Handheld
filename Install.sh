@@ -24,7 +24,7 @@ configure_bluetooth() {
 
 # Install additional packages
 install_additional_packages() {
-    execute_command "yay -S steam mangohud qt5-tools qt6-tools gamescope-session-steam-git inputplumber-git chimeraos-device-quirks-git" true
+    execute_command "yay -S steam mangohud-git lib32-mangohud-git qt5-tools qt6-tools gamescope-session-steam-git inputplumber-git chimeraos-device-quirks-git" true
 }
 
 # InputPlumber setup
@@ -55,7 +55,13 @@ kde_wallet_warning() {
     echo "Please change the KDE wallet password to avoid requiring the Wi-Fi password on boot."
     echo "Refer to the guide for details."
 }
+# Install Asusctl
+install_asusctl() {
+    execute_command "git clone https://github.com/flukejones/asusctl.git" true
+    execute_command "cd asusctl && make build && sudo make install" true
+}
 
+#
 # Reboot
 reboot_system() {
     execute_command "reboot" true

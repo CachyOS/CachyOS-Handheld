@@ -35,6 +35,23 @@ tick rate 500
 LTO thin 
 For inscructions and tweaks visit the cachyOS FAQ
 
+```
+## Useful commands and info.
+# sudo pacman -Syu     (for system update)
+
+Both inputplumber and asusctl are beta and recive update on regualar basis, its recommended
+to check the git hub pages for both and time check the latest updates
+# git clone ***HTTPS address***
+Both programs to can open there respective folders in Home, open terminal and
+
+# sudo make uninstall  This will remove previous version then 
+
+# make
+# sudo make install    This will install latest.
+
+HAPPY GAMING!
+
+
 
 
 

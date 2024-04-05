@@ -22,6 +22,11 @@ configure_bluetooth() {
     execute_command "sudo systemctl enable --now bluetooth" true
 }
 
+# install yay
+install_additional_packages() {
+execute_command "sudo pacman -S yay"
+}
+
 # Install additional packages
 install_additional_packages() {
     execute_command "yay -S steam gamescope mangohud-git lib32-mangohud-git qt5-tools qt6-tools gamescope-session-steam-git inputplumber-git chimeraos-device-quirks-git" true

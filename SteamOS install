@@ -1,10 +1,12 @@
-# CachyOS Installation Guide
+ CachyOS Installation Guide
 
 ## Download CachyOS
 You can grab the latest ISO image of CachyOS from the following sources:
--  https://cachyos.org/download/
-
+```  https://cachyos.org/download/
+```
 ## Installation Process
+Download the 3 files from Repo
+
 Follow onscreen instructions.
 
 Burn iso
@@ -14,6 +16,13 @@ During setup select systemd-boot and online installer.
 ## Troubleshooting
 - If Wi-Fi in Steam shows as disconnected, turn it off and then back on. It will prompt for the password.
 - For additional performance tweaks, explore kernel-level settings on the CachyOS site.
+
+## Recommended kernel 
+6.8 or 6.9
+Bore or scx_lavd scheduler
+tick rate 500
+LTO thin 
+For inscructions and tweaks visit the cachyOS FAQ
 
 
 

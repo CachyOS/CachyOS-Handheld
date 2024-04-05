@@ -2,11 +2,11 @@
 #!/bin/bash
 
 # Display a dialog with radio buttons
-choice=$(zenity --list --title="Power Preferences" --text="Choose a power profile:" \
-        --radiolist --column="Select" --column="Profile" \
+choice=$(zenity --list --title="ASUS Power Control EPP" --text="Choose a power profile:" \
+        --radiolist --column="Select" --column="Power Control" \
         TRUE "Performance" \
         FALSE "Balanced" \
-        FALSE "Power Save")
+        FALSE "Low")
 
 # Handle the user's choice
 case "$choice" in
@@ -21,7 +21,7 @@ case "$choice" in
         powerprofilesctl set balanced
         ;;
     "Power Save")
-        echo "Setting power profile to Power Save."
+        echo "Setting power profile to Low."
         # Set the power saver profile
         powerprofilesctl set power-saver
         ;;

@@ -4,9 +4,9 @@
 # Display a dialog with radio buttons
 choice=$(zenity --list --title="ASUS Power Control EPP" --text="Choose a power profile:" \
         --radiolist --column="Select" --column="Power Control" \
-        TRUE "Performance" \
-        FALSE "Balanced" \
-        FALSE "Low")
+        TRUE "Performance  >15 Watts" \
+        FALSE "Balanced  <15> Watts" \
+        FALSE "Low  <10 Watts")
 
 # Handle the user's choice
 case "$choice" in

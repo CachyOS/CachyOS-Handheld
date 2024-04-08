@@ -4,10 +4,10 @@
  "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
 <policyconfig>
 
-  <vendor>RC71L ChimeraOS</vendor>
+  <vendor>CachyOS</vendor>
   <vendor_url>https://github.com/rog-ally-gaming/</vendor_url>
 
-  <action id="org.neroreflex.policykit.steamos.pkexec.run-session-select">
+  <action id="org.cachyos.policykit.steamos.pkexec.run-session-select">
     <description>Helper to switch sessions</description>
     <icon_name>package-x-generic</icon_name>
     <defaults>

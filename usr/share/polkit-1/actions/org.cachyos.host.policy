@@ -4,10 +4,10 @@
  "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
 <policyconfig>
 
-  <vendor>RC71L ChimeraOS</vendor>
-  <vendor_url>https://github.com/rog-ally-gaming/</vendor_url>
+  <vendor>CachyOS</vendor>
+  <vendor_url>https://cachyos.org</vendor_url>
 
-  <action id="org.neroreflex.policykit.steamos.pkexec.run-set-hostname">
+  <action id="org.cachyos.policykit.steamos.pkexec.run-set-hostname">
     <description>Set the hostname</description>
     <icon_name>package-x-generic</icon_name>
     <defaults>
@@ -18,7 +18,7 @@
     <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/steamos-polkit-helpers/steamos-set-hostname</annotate>
   </action>
 
-  <action id="org.neroreflex.policykit.steamos.pkexec.run-set-timezone">
+  <action id="org.cachyos.policykit.steamos.pkexec.run-set-timezone">
     <description>Set the timezone</description>
     <icon_name>package-x-generic</icon_name>
     <defaults>

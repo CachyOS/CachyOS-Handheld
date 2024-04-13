@@ -1,0 +1,11 @@
+[Unit]
+Description=Steam Power Button Service for CachyOS
+After=graphical-session.target
+
+[Service]
+Restart=always
+RestartSec=5
+ExecStart=/usr/bin/steam-powerbuttond
+
+[Install]
+WantedBy=multi-user.target

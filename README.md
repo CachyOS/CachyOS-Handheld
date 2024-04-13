@@ -29,7 +29,7 @@ Bcachefs could be generally a good idea for handhelds, but it is not fully ready
 - Support for Winesync/Fastsync/NTSync (proton-cachyos provides a fastsync patched proton)
 - BBRv3 used as default
 - OpenRGB Patches included
-- Screensharing for Discord (via xwaylandvideobridge) (currently broken on versions past 0.0.43 so you have to downgrade to 0.0.43 [click here for more information](https://github.com/flathub/com.discordapp.Discord/issues/380))
+- Screensharing for Discord (via xwaylandvideobridge)
 - CachyOS Kernel
 - CachyOS Repository (all packages compiled with avx2/avx512 including auto detection for cpu support)
 

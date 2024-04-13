@@ -1,6 +1,14 @@
 # Cachyos-Deckify-edition
 
-Deckify Edition of CachyOS. Work in progress.
+Deckify Edition of CachyOS
+
+ETA for a Handheld ISO May 2024.
+This will include a own Calamares, adjusted Desktop and Scripts for proper Installation on Handhelds
+We will provide only the Online Installation, so an internet connection will be mandatory.
+
+Currently it is not planned to support more Bootloaders, but if there is any interest we can simply add them as in our default ISOs, for now we will default to systemd-boot.
+
+
 
 ## Features
 - scx_lavd used as default scheduler - LAVD is a latency sensitive scheduler, which is intended to be used for handhelds and gaming
@@ -23,6 +31,17 @@ Deckify Edition of CachyOS. Work in progress.
 - Provide the Steam Deck Themes
 - Enhance Hardware Support
 
+
+
+## Additonal Information
+
+### How can I disable scx_lavd and use the BORE/EEVDF Scheduler?
+
+This can be simply done with following:
+```
+sudo systemctl disable scx.service
+sudo systemctl mask scx.service
+```
 
 ## Credit to:
 - ChimeraOS

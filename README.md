@@ -1,14 +1,22 @@
-# Cachyos-Deckify-edition
+# Cachyos-Deckify-Edition
 
-Deckify Edition of CachyOS
+Deckify Edition of CachyOS for Handhelds
 
 ETA for a Handheld ISO May 2024.
 This will include a own Calamares, adjusted Desktop and Scripts for proper Installation on Handhelds
 We will provide only the Online Installation, so an internet connection will be mandatory.
 
 Currently it is not planned to support more Bootloaders, but if there is any interest we can simply add them as in our default ISOs, for now we will default to systemd-boot.
+There will be support for 5 different filesystems:
 
+- xfs
+- ext4
+- btrfs (default)
+- zfs
+- bcachefs
 
+There will be also automatic snapshotting implemented, to make it easy for users to rollback if they run into issues.
+bcachefs could be generally a good idea for the Handhelds, but it is not fully ready yet and we don't suggest it for now.
 
 ## Features
 - scx_lavd used as default scheduler - LAVD is a latency sensitive scheduler, which is intended to be used for handhelds and gaming
@@ -30,7 +38,6 @@ Currently it is not planned to support more Bootloaders, but if there is any int
 - Improve further the expierence to provide a Steam Deck Similar Expierence
 - Provide the Steam Deck Themes
 - Enhance Hardware Support
-
 
 
 ## Additonal Information

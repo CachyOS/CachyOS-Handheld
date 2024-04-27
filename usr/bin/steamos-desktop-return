@@ -8,7 +8,7 @@ fi
 
 # If not running in a nested desktop, continue with normal script execution
 killall steam
-/usr/libexec/os-session-select gamescope;
+/usr/lib/os-session-select gamescope;
 echo "exited os-session-select";
 if [[ ! -z $(systemctl status gdm | grep running) ]]; then
         echo "shutting down gnome"

@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+# Check if running in a nested desktop
+if [[ "$PATH" =~ nested_plasma ]]; then
+    # If running in a nested desktop, close the session immediately and exit
+    exec qdbus org.kde.Shutdown /Shutdown org.kde.Shutdown.logout
+    exit
+fi
+
+# If not running in a nested desktop, continue with normal script execution
+killall steam
+/usr/libexec/os-session-select gamescope;
+echo "exited os-session-select";
+if [[ ! -z $(systemctl status gdm | grep running) ]]; then
+        echo "shutting down gnome"
+        exec gnome-session-quit --no-prompt
+fi
+if [[ ! -z $(systemctl status sddm | grep running) ]]; then
+        echo "shutting down kde"
+        exec qdbus org.kde.Shutdown /Shutdown org.kde.Shutdown.logout
+fi

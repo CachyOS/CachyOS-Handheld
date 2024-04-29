@@ -12,7 +12,7 @@ CONF_FILE="/etc/sddm.conf.d/zz-steamos-autologin.conf"
 SENTINEL_FILE="steamos-session-select"
 
 # For sanity this shipped file must be present, to ensure we're still on a normal-looking setup.
-CHECK_FILE="/etc/sddm.conf.d/kde_settings.conf"
+CHECK_FILE="/etc/sddm.conf.d/kde-settings.conf"
 
 session="${1:-gamescope}"
 
@@ -34,6 +34,9 @@ case "$session" in
     session_uses_x11=1
   ;;
   gamescope)
+    #session_launcher="opengamepadui-session.desktop"
+    #session_launcher="gamescope-session-steam.desktop"
+    #session_launcher="gamescope-session-steam-plus.desktop"
     session_launcher="gamescope-session.desktop"
   ;;
   *)
@@ -82,3 +85,9 @@ echo "Updated system autologin session to $session_launcher"
 systemctl reset-failed sddm
 systemctl restart sddm
 echo "Restarted SDDM"
+
+if [[ -e /dev/input/.hidden ]]; then
+    echo "Unhide hidden controller devices as needed"
+    pkexec mv /dev/input/.hidden/* /dev/input
+    pkexec rm -r /dev/input/.hidden
+fi

@@ -4,7 +4,7 @@
  "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
 <policyconfig>
 
-  <vendor>CachyOS</vendor>
+  <vendor>CachyOSo</vendor>
   <vendor_url>https://cachyos.org</vendor_url>
 
   <action id="org.chimeraos.policykit.steamos.pkexec.run-steamos-polkit-helpers-steamos-priv-write">

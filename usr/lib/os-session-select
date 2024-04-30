@@ -22,10 +22,10 @@ session_uses_x11=""
 
 case "$session" in
   plasma-wayland-persistent)
-    session_launcher="plasmawayland.desktop"
+    session_launcher="plasma.desktop"
   ;;
   plasma-persistent)
-    session_launcher="plasma.desktop"
+    session_launcher="plasmax11.desktop"
     session_uses_x11=1
   ;;
   plasma)

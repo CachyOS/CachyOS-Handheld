@@ -8,7 +8,7 @@ SENTINEL_FILE="steamos-session-select"
 SENTINEL_VALUE="plasma-steamos-oneshot.desktop"
 
 # If we proceed, execute this
-CHAINED_SESSION="/usr/bin/startplasma-x11"
+CHAINED_SESSION="/usr/lib/plasma-dbus-run-session-if-needed /usr/bin/startplasma-wayland"
 # If we decide the sentinel is consumed, execute this command instead and fail
 RESTORE_SESSION=(steamos-session-select) # No arguments restores the session
 

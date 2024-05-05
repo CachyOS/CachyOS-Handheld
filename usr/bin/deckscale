@@ -14,6 +14,9 @@ sleep 5
 if [[ ! -z $(edid-decode /sys/class/drm/card0-eDP-1/edid | grep 'ANX7530 U') ]]; then
 	/usr/bin/kscreen-doctor output.eDP.rotation.right
 	/usr/bin/kscreen-doctor output.eDP-1.rotation.right
+        #KDE Scales the deck to 175% by default. This is used to correct this behavior
+        /usr/bin/kscreen-doctor output.eDP.scale.1
+	/usr/bin/kscreen-doctor output.eDP-1.scale.1
 fi
 
 # GPD Win 4 screen

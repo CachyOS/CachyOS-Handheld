@@ -21,17 +21,16 @@ create_sentinel=""
 session_uses_x11=""
 
 case "$session" in
-  plasma-wayland-persistent)
+  plasma-persistent)
     session_launcher="plasma.desktop"
   ;;
-  plasma-persistent)
+  plasma-x11-persistent)
     session_launcher="plasmax11.desktop"
     session_uses_x11=1
   ;;
   plasma)
     session_launcher="plasma-steamos-oneshot.desktop"
     create_sentinel=1
-    session_uses_x11=1
   ;;
   gamescope)
     #session_launcher="opengamepadui-session.desktop"

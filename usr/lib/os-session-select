@@ -9,6 +9,7 @@ die() { echo >&2 "!! $*"; exit 1; }
 # File this script will modify, in addition to (potentially) the per-user sentinel file
 CONF_FILE="/etc/sddm.conf.d/zz-steamos-autologin.conf"
 
+# IF this file exists. The entry inside is what startplasma-steamos-oneshot uses to decide weither to boot gamescope or plasma
 SENTINEL_FILE="steamos-session-select"
 
 # For sanity this shipped file must be present, to ensure we're still on a normal-looking setup.
@@ -72,7 +73,7 @@ fi
 
 {
   if [[ -n $session_uses_x11 ]]; then
-    # Default is Wayland
+    # Default is Wayland (Archlinux has x11 as its default. Therefore this is useless most of the time.)
     echo "[General]"
     echo "DisplayServer=X11"
   fi

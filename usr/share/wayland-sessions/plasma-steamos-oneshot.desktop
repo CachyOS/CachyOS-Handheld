@@ -1,6 +1,6 @@
 [Desktop Entry]
 Exec=/usr/bin/startplasma-steamos-oneshot
 TryExec=/usr/bin/startplasma-steamos-oneshot
-DesktopNames=GameScope session Switcher
-Name=Gamescope Session switcher
-Comment=The Session selector for Desktop/Gaming mode switching. This entry decides weither to boot into gaming or desktop mode.
+DesktopNames=KDE (One-Time Launch)
+Name=Plasma (One-Time Launch)
+Comment=Plasma by KDE - One Time Launch Redirect for SteamOS Sessions. Wayland Version

@@ -1,8 +1,7 @@
-# Cachyos-Deckify-Edition
+# Cachyos-Handheld-Edition
 
-Deckify Edition of CachyOS for Handhelds
+Handheld Edition of CachyOS
 
-ETA for a Handheld ISO May 2024.
 This will include our own calamares, adjusted desktop and scripts for proper installation on handhelds.
 We will provide only the online installation, so an internet connection will be mandatory.
 

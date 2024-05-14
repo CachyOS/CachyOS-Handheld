@@ -23,20 +23,28 @@ Bcachefs could be generally a good idea for handhelds, but it is not fully ready
 - Gamescope Session properly implemented 
 - Kernel Patched to have support for Steam Deck OLED
 - Steam Deck OLED Firmware included as default
-- HDR correctly implemented via kerel patches
+- HDR correctly implemented via kernel patches
 - All dependecies and packages bundled for a proper gaming expierence (cachyos-gaming-meta)
-- Support for Winesync/Fastsync/NTSync (proton-cachyos provides a fastsync patched proton)
+- Support for Winesync/Fastsync/NTSync
 - BBRv3 used as default
 - OpenRGB Patches included
 - Screensharing for Discord (via xwaylandvideobridge)
 - CachyOS Kernel
 - CachyOS Repository (all packages compiled with avx2/avx512 including auto detection for cpu support)
-
+- Orientation patches for several handheld devices
+- Support for Rog Ally patched in the kernel
+- Fixes and improvements for VRR on AMD
 
 ## Planned
 - Improve the experience further to provide a Steam Deck similar experience to SteamOS
 - Provide the Steam Deck Themes
 - Enhance Hardware Support
+
+
+## Desktop Support
+
+it is generally planned to enhance the support further also for desktops.
+This generally already works, but swichting the gamesession on Desktops could show problems.
 
 
 ## Additonal Information
@@ -53,3 +61,7 @@ sudo systemctl mask scx.service
 - ChimeraOS
 - Ripplingsnake
 - Manjaro (Phillip Müller for the base deckify package)
+
+## Maintainers
+- Pogogo007 (Nekoh)
+- ptr1337

@@ -53,7 +53,7 @@ else
         echo "No rotation applied."
 fi
 # Run scale command if a scale was found
-if (( $(echo "$scale != 0" | bc -l) )); then
+if (( $(echo "$scale 0" | awk '{print ($1 != $2)}') )); then
         /usr/bin/kscreen-doctor output.$dp.scale.$scale
         echo "$scale scale factor applied."
 else 

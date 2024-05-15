@@ -22,34 +22,38 @@ for p in /sys/class/drm/*eDP*/enabled; do
 done
 
 #Check for specific devices
-
+edid=$(edid-decode $cardpath/edid)
 # Steam Deck
-if [[ ! -z $(edid-decode $cardpath/edid | grep 'ANX7530 U') ]]; then
+if [[ ! -z $(grep 'ANX7530 U' <<< "$edid") ]]; then
         scale=1
         rotation="right"
         echo "Steam Deck display found."
 # GPD Win 4 screen
-elif [[ ! -z $(edid-decode $cardpath/edid | grep 'G1618-04') ]]; then
+elif [[ ! -z $(grep 'G1618-04' <<< "$edid") ]]; then
         scale=1.5
         echo "GPD Win 4 display found"
 # Lenovo Legion Go screen
-elif [[ ! -z $(edid-decode $cardpath/edid | grep 'Go Display') ]]; then
+elif [[ ! -z $(grep 'Go Display' <<< "$edid") ]]; then
         scale=2
         rotation="left"
         echo "Lenovo Legion Go display found."
+# ROG Ally
+elif [[ ! -z $(grep 'TL070FVXS01-0' <<< "$edid") ]]; then
+        scale=1.25
+        echo "ROG Ally display found"
 else
         echo "No known display found."
 fi
 
 # Run rotate command if a rotation was found
 if [[ $rotation != "none" ]]; then
-        /usr/bin/kscreen-doctor output.$dp.rotation.$rotation
+        /usr/bin/kscreen-doctor output.$dp.rotation."$rotation"
         echo "$rotation rotation applied."
 else
         echo "No rotation applied."
 fi
 # Run scale command if a scale was found
-if [[ $scale -ne 0 ]]; then
+if (( $(echo "$scale != 0" | bc -l) )); then
         /usr/bin/kscreen-doctor output.$dp.scale.$scale
         echo "$scale scale factor applied."
 else 

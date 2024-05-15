@@ -47,7 +47,7 @@ fi
 
 # Run rotate command if a rotation was found
 if [[ $rotation != "none" ]]; then
-        /usr/bin/kscreen-doctor output.$dp.rotation."$rotation"
+        /usr/bin/kscreen-doctor output.$dp.rotation.$rotation
         echo "$rotation rotation applied."
 else
         echo "No rotation applied."

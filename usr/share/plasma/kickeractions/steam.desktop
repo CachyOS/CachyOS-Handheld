@@ -1,0 +1,9 @@
+[Desktop Entry]
+TryExec=steam
+Type=Service
+Actions=addToSteam
+
+[Desktop Action addToSteam]
+Exec=steamos-add-to-steam -ui %u
+Icon=steam
+Name=Add to Steam

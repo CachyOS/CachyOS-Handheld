@@ -43,10 +43,10 @@ Bcachefs could be generally a good idea for handhelds, but it is not fully ready
 ## Device specific / Officially supported devices
 Device specific customizations are mainly provided by the chwd profiles [Profiles](https://github.com/CachyOS/chwd/blob/master/profiles/pci/handhelds/profiles.toml) and the kernel.
 ### Steam Deck
-Valve's powerbuttond is used to handle power button events.
+Valve's powerbuttond is used to handle power button events\
 Steam is used for controller support.
 ### ROG Ally
-Handheld Daemon (HHD) is used by default to provide power button handling and controller support.
+Handheld Daemon (HHD) is used by default to provide power button handling and controller support.\
 Rogue enemy is an alternative that provides power profile switching and controller support.
 ### Lenovo Legion
 Handheld Daemon (HHD) is used by default to provide power button handling and controller support.

@@ -2,7 +2,7 @@
 TryExec=steam
 Type=Service
 X-KDE-ServiceTypes=KonqPopupMenu/Plugin
-MimeType=application/x-desktop;application/x-executable;application/vnd.appimage;application/x-shellscript;application/x-ms-dos-executable;
+MimeType=application/x-desktop;application/x-executable;application/vnd.appimage;application/x-shellscript;application/x-ms-dos-executable;application/x-msdownload;
 Actions=addToSteam
 
 [Desktop Action addToSteam]

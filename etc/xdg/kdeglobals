@@ -1,0 +1,26 @@
+[KDE]
+LookAndFeelPackage=com.valve.vapor.desktop
+SingleClick=false
+
+[KDE Action Restrictions][$i]
+action/switch_user=false
+action/start_new_session=false
+action/lock_screen=false
+
+[KDE Control Module Restrictions][$i]
+kcm_sddm.desktop=false
+#Commented to allow plymouth to be modified
+#kcm_plymouth.desktop=false
+
+#Do not mess with fonts for now.
+#[General]
+#font=Noto Sans,11,-1,5,50,0,0,0,0,0
+#menuFont=Noto Sans,11,-1,5,50,0,0,0,0,0
+#smallestReadableFont=Noto Sans,9,-1,5,50,0,0,0,0,0
+#toolBarFont=Noto Sans,11,-1,5,50,0,0,0,0,0
+
+# This is a konsole specific setting belonging to /etc/xdg/konsolerc
+# However we cannot ship this file anymore since upstream konsole ships now this file
+# https://gitlab.steamos.cloud/jupiter/tasks/-/issues/854
+[Desktop Entry]
+DefaultProfile=Vapor.profile

@@ -1,0 +1,6 @@
+[Basic Settings]
+# Indexing-Enabled=true #disable indexing completely
+
+[General]
+only basic indexing=true
+

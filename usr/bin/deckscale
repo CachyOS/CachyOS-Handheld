@@ -44,8 +44,8 @@ done
 edid=$(edid-decode $cardpath/edid)
 # Steam Deck
 if [[ ! -z $(grep 'ANX7530 U' <<< "$edid") ]]; then
-        if [[ -n "$deck" ]]; then
-                scale=$deck
+        if [[ -n "$Deck" ]]; then
+                scale=$Deck
         else
                 scale=1.0
         fi

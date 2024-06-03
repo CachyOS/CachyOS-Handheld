@@ -26,6 +26,9 @@ sleep 5
 scale=0
 rotation="none"
 
+#Source config file for scaling values
+source ~/.config/deckscale
+
 #Find enabled eDP device.
 for p in /sys/class/drm/*eDP*/enabled; do 
  if [[ $(cat $p) == "enabled" ]]; then
@@ -41,21 +44,37 @@ done
 edid=$(edid-decode $cardpath/edid)
 # Steam Deck
 if [[ ! -z $(grep 'ANX7530 U' <<< "$edid") ]]; then
-        scale=1
+        if [[ -n "$deck" ]]; then
+                scale=$deck
+        else
+                scale=1.0
+        fi
         rotation="right"
         echo "Steam Deck display found."
 # GPD Win 4 screen
 elif [[ ! -z $(grep 'G1618-04' <<< "$edid") ]]; then
-        scale=1.5
+        if [[ -n "$GPDWinFour" ]]; then
+                scale=$GPDWinFour
+        else
+                scale=1.5
+        fi
         echo "GPD Win 4 display found"
 # Lenovo Legion Go screen
 elif [[ ! -z $(grep 'Go Display' <<< "$edid") ]]; then
-        scale=2
+        if [[ -n "$LegionGO" ]]; then
+                scale=$LegionGO
+        else
+                scale=2.0
+        fi
         rotation="left"
         echo "Lenovo Legion Go display found."
 # ROG Ally
 elif [[ ! -z $(grep 'TL070FVXS01-0' <<< "$edid") ]]; then
-        scale=1.25
+                if [[ -n "$Ally" ]]; then
+                scale=$Ally
+        else
+                scale=1.25
+        fi
         echo "ROG Ally display found"
 else
         echo "No known display found."

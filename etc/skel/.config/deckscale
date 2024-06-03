@@ -1,0 +1,7 @@
+#Configuration file for the deckscale script
+#Uncomment and change the values for the device you want/use
+#The values are scaling factors. Ex 1.25 = 125%
+#Deck=1.0
+#LegionGO=2.0
+#Ally=1.25
+#GPDWinFour=1.5

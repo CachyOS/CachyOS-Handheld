@@ -70,7 +70,7 @@ sudo systemctl mask scx.service
 ### How can I change the default desktop scaling?
 For unofficially support devices the scaling is provided by KDE.\
 For officially supported devices (deck, ally, legion go, etc) the scaling is provided by a custom deckscale script.\
-The values used by this script can be configured using the configuration file localted at ~/.config/deckscale.\
+The values used by this script can be configured using the configuration file located at ~/.config/deckscale\
 If this file does not exist for you, create it and add the contents from [this file.](https://github.com/CachyOS/CachyOS-Handheld/blob/main/etc/skel/.config/deckscale)
 
 ## Credit to:

@@ -27,7 +27,9 @@ scale=0
 rotation="none"
 
 #Source config file for scaling values
-source ~/.config/deckscale
+if [[ -f ~/.config/deckscale ]]; then
+        source ~/.config/deckscale
+fi
 
 #Find enabled eDP device.
 for p in /sys/class/drm/*eDP*/enabled; do 

@@ -51,6 +51,10 @@ Rogue enemy is an alternative that provides power profile switching and controll
 ### Lenovo Legion
 Handheld Daemon (HHD) is used by default to provide power button handling and controller support.
 
+## Non Officially supported hardware.
+On not tested/supported hardware, you may face issues such as wrong screen orientation, missing sound, etc.
+HHD is not enabled automatically on unknown hardware, as such it must be enabled for specific controllers to work.
+
 
 ## Desktop Support
 

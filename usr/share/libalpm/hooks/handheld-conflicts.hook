@@ -7,7 +7,7 @@ Target = proton-cachyos
 Target = proton-ge-custom
 
 [Action]
-Description = "You have attempted to install a package that is problematic on Steam Deck Hardware, Transaction has been cancelled"
+Description = "You have attempted to install a package that is problematic on Steam Deck Hardware, Transaction will be cancelled if you are on a Steam Deck."
 When = PreTransaction
 Exec = /usr/lib/hwsupport/valve-hardware -i
 AbortOnFail

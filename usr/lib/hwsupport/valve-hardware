@@ -1,8 +1,21 @@
 #!/usr/bin/bash
-# Returns true for Valve handhelds
+inverted=false
+while getopts "i" flag; do
+ case $flag in
+   i) inverted=true ;;
+ esac
+done
+#Exits with 0 for Valve handhelds unless inverted
 SYS_ID="$(cat /sys/devices/virtual/dmi/id/product_name)"
 if [[ ":Jupiter:Galileo:" =~ ":$SYS_ID:" ]]; then
-	exit 0
+	if $inverted; then
+		exit 1
+	else
+		exit 0
+	fi
 fi
-
-exit 1
+if $inverted; then
+	exit 0
+else
+	exit 1
+fi

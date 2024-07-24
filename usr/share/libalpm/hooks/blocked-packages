@@ -10,3 +10,4 @@ Target = packagekit-qt5
 Description = "The transaction is attempting to install packagekit. Packagekit is broken on arch and should not be used. Transaction cancelled."
 When = PreTransaction
 Exec = /usr/bin/false
+AbortOnFail

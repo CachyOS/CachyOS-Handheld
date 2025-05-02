@@ -20,7 +20,7 @@ Bcachefs could be generally a good idea for handhelds, but it is not fully ready
 ## Features
 - scx_lavd used as default scheduler - LAVD is a latency sensitive scheduler, which is intended to be used for handhelds and gaming
 - Steam Deck like Steam Expierence
-- Gamescope Session properly implemented 
+- Gamescope Session properly implemented
 - Kernel Patched to have support for Steam Deck OLED
 - Steam Deck OLED Firmware included as default
 - HDR correctly implemented via kernel patches
@@ -46,7 +46,8 @@ Device specific customizations are mainly provided by the chwd profiles [Profile
 Valve's powerbuttond is used to handle power button events\
 Steam is used for controller support.
 ### ROG Ally
-Handheld Daemon (HHD) is used by default to provide power button handling and controller support.\
+steam-powerbuttond-git is used to handle power button events.\
+InputPlumber is used for controller support.\
 Rogue enemy is an alternative that provides power profile switching and controller support.
 ### Lenovo Legion
 Handheld Daemon (HHD) is used by default to provide power button handling and controller support.

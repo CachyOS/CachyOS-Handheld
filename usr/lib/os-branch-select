@@ -2,15 +2,11 @@
 
 set -e
 
-os_name=$(grep '^NAME=' /etc/os-release 2>/dev/null | cut -d= -f2- | tr -d '"')
+os_name="$(grep '^NAME=' /etc/os-release 2>/dev/null | cut -d= -f2- | tr -d '"')"
 
 if [[ $# -eq 1 ]]; then
   case "$1" in
-    -c)
-      echo "$os_name"
-      exit 0
-      ;;
-    -l)
+    -c|-l)
       echo "$os_name"
       exit 0
       ;;

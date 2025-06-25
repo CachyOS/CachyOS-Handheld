@@ -82,6 +82,7 @@ If this file does not exist for you, create it and add the contents from [this f
 - ChimeraOS
 - Ripplingsnake
 - Manjaro (Phillip Müller for the base deckify package)
+- Bazzite
 
 ## Maintainers
 - Pogogo007 (Nekoh)

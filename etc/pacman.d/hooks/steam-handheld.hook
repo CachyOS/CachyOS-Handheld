@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = steam
+
+[Action]
+Description = Force Handheld Steam Branch
+When = PostTransaction
+Exec = /usr/bin/steam-force-handheld

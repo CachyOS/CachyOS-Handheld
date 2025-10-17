@@ -1,9 +1,3 @@
-# USB devices and topological children
-SUBSYSTEMS=="usb", TAG+="uaccess"
-
-# HID devices over hidraw
-KERNEL=="hidraw*", TAG+="uaccess"
-
 # LED color write access
 SUBSYSTEM=="leds", RUN+="/usr/bin/chown 1000:1000 '/sys/class/leds/%k/brightness'"
 SUBSYSTEM=="leds", RUN+="/usr/bin/chown 1000:1000 '/sys/class/leds/%k/effect'"

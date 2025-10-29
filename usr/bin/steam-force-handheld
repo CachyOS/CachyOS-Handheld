@@ -3,7 +3,7 @@
 # This script forces the steam launch script to always use the -steamdeck flag.
 # This prevents Desktop Mode from re-downloading the desktop client every time you switch between Game Mode and Desktop mode.
 
-if [ "$EUID" -ne 0 ]
+if [ "$EUID" -ne 0 ]; then
   then echo "This script can only be run if you are root."
   exit
 fi

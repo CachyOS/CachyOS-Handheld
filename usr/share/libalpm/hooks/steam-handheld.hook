@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = steam
+Target = cachyos-handheld
+
+[Action]
+Description = Force Handheld Steam Branch
+When = PostTransaction
+Exec = /usr/share/libalpm/scripts/steam-force-handheld

@@ -7,4 +7,4 @@ Target = steam
 [Action]
 Description = Force Handheld Steam Branch
 When = PostTransaction
-Exec = /usr/bin/steam-force-handheld
+Exec = /usr/share/libalpm/scripts/

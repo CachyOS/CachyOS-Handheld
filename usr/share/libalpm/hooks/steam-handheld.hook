@@ -3,6 +3,7 @@ Operation = Install
 Operation = Upgrade
 Type = Package
 Target = steam
+Target = cachyos-handheld
 
 [Action]
 Description = Force Handheld Steam Branch

@@ -8,4 +8,5 @@ if [ "$EUID" -ne 0 ]; then
   exit
 fi
 
-[[ ! $(grep "steamdeck" /usr/bin/steam) ]] && sed -i "s/\/steam /\/steam -steamdeck /" /usr/bin/steam
+! grep -q "steamdeck" /usr/bin/steam && sed -i "s/\/steam /\/steam -steamdeck /" /usr/bin/steam
+exit 0

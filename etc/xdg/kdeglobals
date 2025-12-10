@@ -8,9 +8,7 @@ action/start_new_session=false
 action/lock_screen=false
 
 [KDE Control Module Restrictions][$i]
-kcm_sddm.desktop=false
-#Commented to allow plymouth to be modified
-#kcm_plymouth.desktop=false
+kcm_plasmalogin=false
 
 #Do not mess with fonts for now.
 #[General]

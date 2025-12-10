@@ -7,13 +7,13 @@ die() { echo >&2 "!! $*"; exit 1; }
 # FIXME Purge old files and use this one
 
 # File this script will modify, in addition to (potentially) the per-user sentinel file
-CONF_FILE="/etc/sddm.conf.d/zz-steamos-autologin.conf"
+CONF_FILE="/etc/plasmalogin.conf.d/zz-steamos-autologin.conf"
 
 # IF this file exists. The entry inside is what startplasma-steamos-oneshot uses to decide weither to boot gamescope or plasma
 SENTINEL_FILE="steamos-session-select"
 
 # For sanity this shipped file must be present, to ensure we're still on a normal-looking setup.
-CHECK_FILE="/etc/sddm.conf.d/cachyos.conf"
+CHECK_FILE="/etc/plasmalogin.conf.d/cachyos.conf"
 
 session="${1:-gamescope}"
 
@@ -34,9 +34,6 @@ case "$session" in
     create_sentinel=1
   ;;
   gamescope)
-    #session_launcher="opengamepadui-session.desktop"
-    #session_launcher="gamescope-session-steam.desktop"
-    #session_launcher="gamescope-session-steam-plus.desktop"
     session_launcher="gamescope-session.desktop"
   ;;
   *)
@@ -73,7 +70,7 @@ fi
 
 {
   if [[ -n $session_uses_x11 ]]; then
-    # Default is Wayland (Archlinux has x11 as its default. Therefore this is useless most of the time.)
+    # Default is Wayland, this is useless.
     echo "[General]"
     echo "DisplayServer=X11"
   fi
@@ -82,9 +79,9 @@ fi
 } > "$CONF_FILE"
 
 echo "Updated system autologin session to $session_launcher"
-systemctl reset-failed sddm
-systemctl restart sddm
-echo "Restarted SDDM"
+systemctl reset-failed plasmalogin
+systemctl restart plasmalogin
+echo "Restarted Plasma Login Manager"
 
 if [[ -e /dev/input/.hidden ]]; then
     echo "Unhide hidden controller devices as needed"

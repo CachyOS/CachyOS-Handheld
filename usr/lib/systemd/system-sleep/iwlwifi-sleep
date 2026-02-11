@@ -1,0 +1,14 @@
+#!/bin/bash
+
+PRODUCT_NAME="$(</sys/class/dmi/id/product_name)"
+
+[[ "$PRODUCT_NAME" != "Claw A1M" ]] && exit 0
+
+case "$1" in
+  pre)
+    /usr/sbin/modprobe -r iwlmvm iwlwifi
+    ;;
+  post)
+    /usr/sbin/modprobe iwlwifi iwlmvm
+    ;;
+esac

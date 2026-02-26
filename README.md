@@ -45,12 +45,18 @@ Device specific customizations are mainly provided by the chwd profiles [Profile
 ### Steam Deck
 Valve's powerbuttond is used to handle power button events\
 Steam is used for controller support.
-### ROG Ally
+### ROG Ally & ROG Ally X
 steam-powerbuttond-git is used to handle power button events.\
 InputPlumber is used for controller support.\
 Rogue enemy is an alternative that provides power profile switching and controller support.
-### Lenovo Legion
+### Lenovo Legion Go
 Handheld Daemon (HHD) is used by default to provide power button handling and controller support.
+### Lenovo Legion Go S
+Steam-Powerbuttond is used to handle power button events.\
+InputPlumber is used for controller support, unlike the original Legion Go.
+### MSI Claw A1M & A2VM
+Steam-Powerbuttond is used to handle power button events.\
+InputPlumber is used for controller support.
 
 ## Non Officially supported hardware.
 On not tested/supported hardware, you may face issues such as wrong screen orientation, missing sound, etc.

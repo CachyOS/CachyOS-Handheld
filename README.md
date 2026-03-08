@@ -56,12 +56,10 @@ Handheld Daemon (HHD) is used by default to provide power button handling and co
 On not tested/supported hardware, you may face issues such as wrong screen orientation, missing sound, etc.
 HHD is not enabled automatically on unknown hardware, as such it must be enabled for specific controllers to work.
 
-
 ## Desktop Support
 
 it is generally planned to enhance the support further also for desktops.
 This generally already works, but swichting the gamesession on Desktops could show problems.
-
 
 ## Additonal Information
 
@@ -72,11 +70,6 @@ This can be simply done with following:
 sudo systemctl disable scx.service
 sudo systemctl mask scx.service
 ```
-### How can I change the default desktop scaling?
-For unofficially support devices the scaling is provided by KDE.\
-For officially supported devices (deck, ally, legion go, etc) the scaling is provided by a custom deckscale script.\
-The values used by this script can be configured using the configuration file located at ~/.config/deckscale\
-If this file does not exist for you, create it and add the contents from [this file.](https://github.com/CachyOS/CachyOS-Handheld/blob/main/etc/skel/.config/deckscale)
 
 ## Credit to:
 - ChimeraOS

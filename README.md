@@ -63,6 +63,24 @@ This generally already works, but swichting the gamesession on Desktops could sh
 
 ## Additonal Information
 
+### How can I permanently boot to Desktop Mode?
+
+The default handheld behavior starts the Gamescope session on every fresh boot.
+To make the system remember the last selected session instead, run:
+```
+steamos-session-select persistent
+```
+
+After enabling persistent mode, switching to Desktop Mode will keep future boots
+on the desktop session instead of forcing Gamescope again.
+
+To restore the default handheld behavior, run:
+```
+steamos-session-select oneshot
+```
+
+With oneshot mode enabled, every fresh boot starts in the Gamescope session.
+
 ### How can I disable scx_lavd and use the BORE/EEVDF Scheduler?
 
 This can be simply done with following:

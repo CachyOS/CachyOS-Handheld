@@ -63,6 +63,25 @@ This generally already works, but swichting the gamesession on Desktops could sh
 
 ## Additonal Information
 
+### How can I update without leaving Gaming Mode?
+
+Add **Update CachyOS** to Steam as a non-Steam application once. From a terminal
+in the active user session, this can also be opened with:
+
+```
+steamos-add-to-steam /usr/share/applications/cachyos-handheld-update.desktop
+```
+
+Then launch **Update CachyOS** from Steam's Library in Gaming Mode. It opens a
+full-screen terminal, asks for your account password and confirms a full
+`pacman -Syu` upgrade. Steam + X opens the on-screen keyboard. Save and close
+games first; restart from Steam after kernel or graphics-driver updates.
+
+On Btrfs installations, the normal Snapper pacman hooks create snapshots before
+and after the transaction. This updates repository packages; Flatpaks and AUR
+packages are managed separately. Steam's built-in OS update button still uses
+the existing `holo-update` stub and is not connected to this launcher.
+
 ### How can I permanently boot to Desktop Mode?
 
 The default handheld behavior starts the Gamescope session on every fresh boot.

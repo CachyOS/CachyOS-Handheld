@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+
+if [[ ${1:-} != --run ]]; then
+    exec konsole --separate --fullscreen -e "$0" --run
+fi
+
+printf 'CachyOS system update\n\nSave your game and close running games before continuing.\n'
+printf 'Use Steam + X to open the on-screen keyboard.\n'
+printf 'Enter your account password when sudo asks for it.\n\n'
+
+# A full upgrade runs the same pacman snapshot hooks as desktop mode.
+# Keep authentication and pacman's transaction confirmation interactive.
+systemd-inhibit --what=sleep:idle --mode=block \
+    --who='CachyOS system update' --why='Updating system packages' \
+    sudo pacman -Syu
+status=$?
+
+if (( status == 0 )); then
+    printf '\nUpdate complete. Restart from Steam after a kernel or driver update.\n'
+else
+    printf '\nUpdate exited with status %s. Review the messages above.\n' "$status"
+fi
+read -r -p 'Press Enter to close this window. ' _
+exit "$status"

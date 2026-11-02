@@ -1,0 +1,10 @@
+[Unit]
+Description=Check for a first Steam login to add the CachyOS updater
+
+[Timer]
+OnStartupSec=15
+OnUnitInactiveSec=30
+AccuracySec=5
+
+[Install]
+WantedBy=timers.target

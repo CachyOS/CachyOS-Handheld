@@ -65,8 +65,11 @@ This generally already works, but swichting the gamesession on Desktops could sh
 
 ### How can I update without leaving Gaming Mode?
 
-Add **Update CachyOS** to Steam as a non-Steam application once. From a terminal
-in the active user session, this can also be opened with:
+**Update CachyOS** is added to the Non-Steam library automatically after the first
+Steam login for each account, usually within 30 seconds. Registration uses the
+running Steam client; it does not edit Steam's shortcut database or restart Steam.
+Existing updater shortcuts are detected, and removing a registered shortcut is
+respected. To add it again manually, run this in the active user session:
 
 ```
 steamos-add-to-steam /usr/share/applications/cachyos-handheld-update.desktop

@@ -60,9 +60,7 @@ def active_account(home, root):
             continue
         account = int(steam_id) - STEAM_ID_BASE
         if 0 < account < 2**32 and root.joinpath("userdata", str(account), "config").is_dir():
-            # Steam reuses Timestamp during automatic login. File changes, not
-            # that timestamp, identify a new setup attempt. Steam itself decides
-            # when it can accept the shortcut; confirmation is checked below.
+            # Automatic logins reuse Timestamp; use the file revision instead.
             return str(account), str(login_file.stat().st_mtime_ns)
     return None
 
@@ -116,7 +114,6 @@ def setup(home, state_dir, now):
     state.update(attempts=state["attempts"] + 1, requested_at=now)
     save_state(state_file, state)
     subprocess.run([ADD_SHORTCUT_HELPER, LAUNCHER], check=True, timeout=10)
-    # Only mark registration complete after Steam's own database confirms it.
     return "waiting"
 
 

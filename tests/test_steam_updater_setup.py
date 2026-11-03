@@ -1,9 +1,12 @@
 import importlib.machinery
 import importlib.util
 import json
+import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
+import time
 import unittest
 from unittest.mock import patch
 
@@ -30,7 +33,7 @@ class RegistrationTests(unittest.TestCase):
         self.state.mkdir()
         self.user(1, "first")
         self.select("first")
-        self.client = patch.object(setup, "steam_process", return_value=("launch-one", 100))
+        self.client = patch.object(setup, "steam_process", return_value="launch-one")
         self.client.start()
         self.addCleanup(self.client.stop)
         self.request = patch.object(setup.subprocess, "run")
@@ -58,17 +61,19 @@ class RegistrationTests(unittest.TestCase):
         path.write_bytes(data)
         return path
 
-    def tick(self):
-        setup.setup(self.home, self.state)
+    def tick(self, now=0):
+        return setup.setup(self.home, self.state, now)
 
-    def test_waits_for_a_login_in_this_steam_launch(self):
+    def test_saved_timestamps_do_not_block_automatic_login(self):
         self.user(1, "first", timestamp="99")
-        self.tick()
-        self.run.assert_not_called()
-        self.user(1, "first", timestamp="101")
         self.tick()
         self.run.assert_called_once_with(
             ["/usr/bin/steamos-add-to-steam", setup.LAUNCHER], check=True, timeout=10)
+
+    def test_waits_while_signed_out(self):
+        self.select("")
+        self.tick()
+        self.run.assert_not_called()
 
     def test_waits_when_steam_is_not_running(self):
         with patch.object(setup, "steam_process", return_value=None):
@@ -113,7 +118,7 @@ class RegistrationTests(unittest.TestCase):
         self.run.assert_called_once()
 
     def test_account_change_before_request_defers_registration(self):
-        with patch.object(setup, "active_account", side_effect=["1", "2"]):
+        with patch.object(setup, "active_account", side_effect=[("1", "101"), ("2", "101")]):
             self.tick()
         self.run.assert_not_called()
         self.assertFalse(self.state.joinpath("1.json").exists())
@@ -122,14 +127,92 @@ class RegistrationTests(unittest.TestCase):
         self.run.side_effect = subprocess.CalledProcessError(1, "steam")
         with self.assertRaises(subprocess.CalledProcessError):
             self.tick()
-        self.assertFalse(self.state.joinpath("1.json").exists())
+        self.assertFalse(json.loads(self.state.joinpath("1.json").read_text()).get("registered"))
         self.run.side_effect = None
-        self.tick()
+        self.tick(setup.RETRY_SECONDS)
         self.assertEqual(self.run.call_count, 2)
+
+    def test_accepted_but_unconfirmed_request_retries_in_the_same_launch(self):
+        self.tick()
+        self.tick(setup.RETRY_SECONDS - 1)
+        self.run.assert_called_once()
+        self.tick(setup.RETRY_SECONDS)
+        self.assertEqual(self.run.call_count, 2)
+        self.shortcuts(1, [{"Exe": setup.EXECUTABLE}])
+        self.assertEqual(self.tick(setup.RETRY_SECONDS + 1), "done")
+        self.assertEqual(self.run.call_count, 2)
+
+    def test_request_budget_is_bounded_and_resets_at_a_new_login(self):
+        for attempt in range(setup.MAX_ATTEMPTS):
+            self.tick(attempt * setup.RETRY_SECONDS)
+        self.assertEqual(self.tick(setup.MAX_ATTEMPTS * setup.RETRY_SECONDS), "exhausted")
+        self.tick(1000)
+        self.assertEqual(self.run.call_count, setup.MAX_ATTEMPTS)
+        self.user(1, "first", timestamp="102")
+        self.tick(1001)
+        self.assertEqual(self.run.call_count, setup.MAX_ATTEMPTS + 1)
+
+    def test_shortcut_saved_late_is_confirmed_without_another_request(self):
+        self.tick()
+        self.shortcuts(1, [{"Exe": setup.EXECUTABLE}])
+        self.assertEqual(self.tick(setup.RETRY_SECONDS), "done")
+        self.run.assert_called_once()
+
+    def test_missing_login_files_can_appear_during_the_bounded_window(self):
+        login_file = self.root / "config/loginusers.vdf"
+        login_file.unlink()
+        clock = [0]
+
+        def advance(seconds):
+            clock[0] += seconds
+            if not login_file.exists():
+                self.user(1, "first")
+            elif self.run.called:
+                self.shortcuts(1, [{"Exe": setup.EXECUTABLE}])
+
+        with patch.object(setup.time, "monotonic", side_effect=lambda: clock[0]), \
+             patch.object(setup.time, "sleep", side_effect=advance):
+            setup.register(self.home, self.state)
+        self.run.assert_called_once()
+        self.assertTrue(json.loads(self.state.joinpath("1.json").read_text())["registered"])
+
+    def test_waiting_for_authentication_has_a_deadline(self):
+        self.select("")
+        clock = [0]
+        with patch.object(setup.time, "monotonic", side_effect=lambda: clock[0]), \
+             patch.object(setup.time, "sleep", side_effect=lambda seconds: clock.__setitem__(0, clock[0] + seconds)):
+            setup.register(self.home, self.state)
+        self.run.assert_not_called()
+        self.assertGreaterEqual(clock[0], setup.SETUP_SECONDS)
+        self.assertLess(clock[0], setup.SETUP_SECONDS + setup.CHECK_SECONDS)
+
+    def test_real_process_detection_and_fresh_login_files(self):
+        self.client.stop()
+        child = subprocess.Popen([
+            sys.executable, "-c",
+            'import ctypes,os,sys; '
+            'assert ctypes.CDLL(None).prctl(15,b"steam",0,0,0)==0; '
+            'print(os.getpid(),flush=True); sys.stdin.read()'
+        ], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+        def cleanup():
+            child.terminate()
+            child.communicate(timeout=5)
+
+        self.addCleanup(cleanup)
+        self.home.joinpath(".steam/steam.pid").write_text(child.stdout.readline())
+        self.user(1, "first", timestamp=str(int(time.time())))
+        self.tick()
+        self.run.assert_called_once()
+
+    def test_real_process_detection_ignores_an_unrelated_pid(self):
+        self.client.stop()
+        self.home.joinpath(".steam/steam.pid").write_text(str(os.getpid()))
+        self.assertEqual(self.tick(), "idle")
+        self.run.assert_not_called()
 
     def test_unconfirmed_request_retries_after_steam_restarts(self):
         self.tick()
-        with patch.object(setup, "steam_process", return_value=("launch-two", 100)):
+        with patch.object(setup, "steam_process", return_value="launch-two"):
             self.tick()
         self.assertEqual(self.run.call_count, 2)
 

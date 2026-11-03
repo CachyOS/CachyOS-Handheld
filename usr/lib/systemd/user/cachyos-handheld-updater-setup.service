@@ -1,8 +1,12 @@
 [Unit]
 Description=Add the CachyOS updater after the first Steam login
 ConditionPathExists=/usr/share/applications/cachyos-handheld-update.desktop
+ConditionUser=!root
 
 [Service]
 Type=oneshot
 ExecStart=/usr/lib/cachyos-handheld/setup-steam-updater
-TimeoutStartSec=20
+TimeoutStartSec=2min
+
+[Install]
+WantedBy=default.target

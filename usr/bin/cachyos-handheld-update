@@ -1,7 +1,6 @@
 #!/usr/bin/bash
 
-# Steam's overlay and runtime libraries must not be injected into the terminal
-# or the host package-management commands it runs.
+# Use host libraries instead of Steam's overlay and runtime.
 unset LD_PRELOAD LD_LIBRARY_PATH
 
 if [[ ${1:-} != --run ]]; then
@@ -12,8 +11,6 @@ printf 'CachyOS system update\n\nSave your game and close running games before c
 printf 'Use Steam + X to open the on-screen keyboard.\n'
 printf 'Enter your account password when sudo asks for it.\n\n'
 
-# A full upgrade runs the same pacman snapshot hooks as desktop mode.
-# Keep authentication and pacman's transaction confirmation interactive.
 systemd-inhibit --what=sleep:idle --mode=block \
     --who='CachyOS system update' --why='Updating system packages' \
     sudo pacman -Syu

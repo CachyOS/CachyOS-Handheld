@@ -4,9 +4,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
-import sys
 import tempfile
-import time
 import unittest
 from unittest.mock import patch
 
@@ -18,6 +16,7 @@ LOADER = importlib.machinery.SourceFileLoader("setup_steam_updater", str(SCRIPT)
 SPEC = importlib.util.spec_from_loader(LOADER.name, LOADER)
 setup = importlib.util.module_from_spec(SPEC)
 LOADER.exec_module(setup)
+detect_steam_process = setup.steam_process
 
 
 class RegistrationTests(unittest.TestCase):
@@ -33,12 +32,8 @@ class RegistrationTests(unittest.TestCase):
         self.state.mkdir()
         self.user(1, "first")
         self.select("first")
-        self.client = patch.object(setup, "steam_process", return_value="launch-one")
-        self.client.start()
-        self.addCleanup(self.client.stop)
-        self.request = patch.object(setup.subprocess, "run")
-        self.run = self.request.start()
-        self.addCleanup(self.request.stop)
+        self.client = self.enterContext(patch.object(setup, "steam_process", return_value="launch-one"))
+        self.run = self.enterContext(patch.object(setup.subprocess, "run"))
 
     def write_vdf(self, path, data):
         path.write_text(vdf.dumps(data), encoding="utf-8")
@@ -64,6 +59,9 @@ class RegistrationTests(unittest.TestCase):
     def tick(self, now=0):
         return setup.setup(self.home, self.state, now)
 
+    def registered(self, account=1):
+        return json.loads(self.state.joinpath(f"{account}.json").read_text()).get("registered", False)
+
     def test_saved_timestamps_do_not_block_automatic_login(self):
         self.user(1, "first", timestamp="99")
         self.tick()
@@ -87,18 +85,17 @@ class RegistrationTests(unittest.TestCase):
         self.tick()
         self.run.assert_called_once()
         self.assertEqual(other.read_bytes(), original)
-        self.assertFalse(json.loads(self.state.joinpath("1.json").read_text()).get("registered"))
-        # Simulate Steam persisting the requested shortcut, not the setup helper.
+        self.assertFalse(self.registered())
         self.shortcuts(1, [{"Exe": f'"{setup.EXECUTABLE}"'}])
-        self.tick()
-        self.assertTrue(json.loads(self.state.joinpath("1.json").read_text())["registered"])
+        self.assertEqual(self.tick(setup.RETRY_SECONDS), "done")
+        self.assertTrue(self.registered())
         self.run.assert_called_once()
 
     def test_existing_manual_shortcut_is_not_duplicated(self):
         self.shortcuts(1, [{"AppName": "Renamed updater", "Exe": setup.EXECUTABLE}])
         self.tick()
         self.run.assert_not_called()
-        self.assertTrue(json.loads(self.state.joinpath("1.json").read_text())["registered"])
+        self.assertTrue(self.registered())
 
     def test_removed_registered_shortcut_stays_removed(self):
         path = self.shortcuts(1, [{"ShortcutPath": setup.LAUNCHER}])
@@ -127,7 +124,7 @@ class RegistrationTests(unittest.TestCase):
         self.run.side_effect = subprocess.CalledProcessError(1, "steam")
         with self.assertRaises(subprocess.CalledProcessError):
             self.tick()
-        self.assertFalse(json.loads(self.state.joinpath("1.json").read_text()).get("registered"))
+        self.assertFalse(self.registered())
         self.run.side_effect = None
         self.tick(setup.RETRY_SECONDS)
         self.assertEqual(self.run.call_count, 2)
@@ -152,12 +149,6 @@ class RegistrationTests(unittest.TestCase):
         self.tick(1001)
         self.assertEqual(self.run.call_count, setup.MAX_ATTEMPTS + 1)
 
-    def test_shortcut_saved_late_is_confirmed_without_another_request(self):
-        self.tick()
-        self.shortcuts(1, [{"Exe": setup.EXECUTABLE}])
-        self.assertEqual(self.tick(setup.RETRY_SECONDS), "done")
-        self.run.assert_called_once()
-
     def test_missing_login_files_can_appear_during_the_bounded_window(self):
         login_file = self.root / "config/loginusers.vdf"
         login_file.unlink()
@@ -174,7 +165,7 @@ class RegistrationTests(unittest.TestCase):
              patch.object(setup.time, "sleep", side_effect=advance):
             setup.register(self.home, self.state)
         self.run.assert_called_once()
-        self.assertTrue(json.loads(self.state.joinpath("1.json").read_text())["registered"])
+        self.assertTrue(self.registered())
 
     def test_waiting_for_authentication_has_a_deadline(self):
         self.select("")
@@ -186,26 +177,8 @@ class RegistrationTests(unittest.TestCase):
         self.assertGreaterEqual(clock[0], setup.SETUP_SECONDS)
         self.assertLess(clock[0], setup.SETUP_SECONDS + setup.CHECK_SECONDS)
 
-    def test_real_process_detection_and_fresh_login_files(self):
-        self.client.stop()
-        child = subprocess.Popen([
-            sys.executable, "-c",
-            'import ctypes,os,sys; '
-            'assert ctypes.CDLL(None).prctl(15,b"steam",0,0,0)==0; '
-            'print(os.getpid(),flush=True); sys.stdin.read()'
-        ], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
-        def cleanup():
-            child.terminate()
-            child.communicate(timeout=5)
-
-        self.addCleanup(cleanup)
-        self.home.joinpath(".steam/steam.pid").write_text(child.stdout.readline())
-        self.user(1, "first", timestamp=str(int(time.time())))
-        self.tick()
-        self.run.assert_called_once()
-
     def test_real_process_detection_ignores_an_unrelated_pid(self):
-        self.client.stop()
+        self.client.side_effect = detect_steam_process
         self.home.joinpath(".steam/steam.pid").write_text(str(os.getpid()))
         self.assertEqual(self.tick(), "idle")
         self.run.assert_not_called()

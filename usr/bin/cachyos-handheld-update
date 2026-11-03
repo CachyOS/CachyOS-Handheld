@@ -1,5 +1,9 @@
 #!/usr/bin/bash
 
+# Steam's overlay and runtime libraries must not be injected into the terminal
+# or the host package-management commands it runs.
+unset LD_PRELOAD LD_LIBRARY_PATH
+
 if [[ ${1:-} != --run ]]; then
     exec konsole --separate --fullscreen -e "$0" --run
 fi

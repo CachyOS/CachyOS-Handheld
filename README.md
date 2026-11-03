@@ -66,14 +66,25 @@ This generally already works, but swichting the gamesession on Desktops could sh
 ### How can I update without leaving Gaming Mode?
 
 **Update CachyOS** is added to the Non-Steam library automatically after the first
-Steam login for each account, usually within 30 seconds. Registration uses the
+Steam login for each account. Registration uses the
 running Steam client; it does not edit Steam's shortcut database or restart Steam.
 Existing updater shortcuts are detected, and removing a registered shortcut is
-respected. To add it again manually, run this in the active user session:
+respected. Existing installations pick up this setup at the next Linux user
+session or reboot after upgrading the package. To add it again manually, run
+this in the active user session:
 
 ```
 steamos-add-to-steam /usr/share/applications/cachyos-handheld-update.desktop
 ```
+
+Setup watches Steam's login files and retries briefly while Steam starts; it
+does not poll in the background after setup finishes. A failed or unconfirmed
+request is retried up to three times, then deferred until the next login.
+To disable automatic setup for every user, run
+`sudo systemctl --global disable cachyos-handheld-updater-setup.path`.
+That change takes effect at the next user-session start.
+For just your account, run
+`systemctl --user mask --now cachyos-handheld-updater-setup.path cachyos-handheld-updater-setup.service`.
 
 Then launch **Update CachyOS** from Steam's Library in Gaming Mode. It opens a
 full-screen terminal, asks for your account password and confirms a full

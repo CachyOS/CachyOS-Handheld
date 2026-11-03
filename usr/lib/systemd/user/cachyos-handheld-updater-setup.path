@@ -1,0 +1,11 @@
+[Unit]
+Description=Watch for Steam logins to register the CachyOS updater
+
+[Path]
+PathChanged=%h/.steam/steam.pid
+PathChanged=%h/.steam/registry.vdf
+PathChanged=%h/.steam/steam/config/loginusers.vdf
+
+[Install]
+WantedBy=default.target
+Also=cachyos-handheld-updater-setup.service

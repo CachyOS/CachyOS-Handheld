@@ -76,8 +76,7 @@ For just your account, run
 `systemctl --user mask --now cachyos-handheld-updater-setup.path cachyos-handheld-updater-setup.service`.
 
 Then launch **Update CachyOS** from Steam's Library in Gaming Mode. It opens a
-full-screen terminal, asks for your account password and confirms a full
-`pacman -Syu` upgrade. Steam + X opens the on-screen keyboard.
+full-screen terminal running `cachy-update`. Steam + X opens the on-screen keyboard.
 
 ### How can I permanently boot to Desktop Mode?
 

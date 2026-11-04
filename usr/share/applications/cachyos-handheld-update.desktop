@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Update CachyOS
+Comment=Update system packages from desktop or gaming mode
+Exec=/usr/bin/cachyos-handheld-update
+Icon=system-software-update
+Terminal=false
+Type=Application
+Categories=System;

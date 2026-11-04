@@ -104,7 +104,6 @@ def setup(home, state_dir, now):
     token = f"{launch}:{revision}"
     if state.get("login") != token:
         state = {"login": token, "attempts": 0, "requested_at": -RETRY_SECONDS}
-    # Give Steam time to persist an accepted request before retrying it.
     if now - state["requested_at"] < RETRY_SECONDS:
         return "waiting"
     if state["attempts"] >= MAX_ATTEMPTS:
@@ -131,7 +130,7 @@ def register(home, state_dir):
                       "setup will retry at the next Steam login.", file=sys.stderr)
                 return
         except FileNotFoundError:
-            last_error = None  # Steam may not have created its login files yet.
+            last_error = None
         except (OSError, ValueError, KeyError, SyntaxError, subprocess.SubprocessError) as error:
             # Steam may be writing its login or shortcut files during this check.
             last_error = type(error).__name__

@@ -1,0 +1,158 @@
+#!/usr/bin/python
+"""Register the updater through Steam, once per local Steam account."""
+
+import fcntl
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import time
+
+import vdf
+
+
+LAUNCHER = "/usr/share/applications/cachyos-handheld-update.desktop"
+EXECUTABLE = "/usr/bin/cachyos-handheld-update"
+ADD_SHORTCUT_HELPER = "/usr/bin/steamos-add-to-steam"
+STEAM_ID_BASE = 76561197960265728
+CHECK_SECONDS = 2
+RETRY_SECONDS = 20
+SETUP_SECONDS = 90
+MAX_ATTEMPTS = 3
+
+
+def lowercase_keys(value):
+    if isinstance(value, dict):
+        return {key.lower(): lowercase_keys(item) for key, item in value.items()}
+    return value
+
+
+def read_text_vdf(path):
+    with path.open(encoding="utf-8") as stream:
+        return lowercase_keys(vdf.load(stream))
+
+
+def steam_process(home):
+    try:
+        pid = int((home / ".steam/steam.pid").read_text())
+        process = Path("/proc") / str(pid)
+        if process.stat().st_uid != os.getuid() or process.joinpath("comm").read_text().strip() != "steam":
+            return None
+        fields = process.joinpath("stat").read_text().rsplit(")", 1)[1].split()
+    except (FileNotFoundError, ProcessLookupError):
+        return None
+    ticks = int(fields[19])
+    boot_id = Path("/proc/sys/kernel/random/boot_id").read_text().strip()
+    return f"{boot_id}:{pid}:{ticks}"
+
+
+def active_account(home, root):
+    login_file = root / "config/loginusers.vdf"
+    users = read_text_vdf(login_file)["users"]
+    registry = read_text_vdf(home / ".steam/registry.vdf")
+    steam = registry["registry"]["hkcu"]["software"]["valve"]["steam"]
+    name = steam.get("autologinuser", "").lower()
+    for steam_id, user in users.items():
+        selected = user.get("accountname", "").lower() == name if name else user.get("mostrecent") == "1"
+        if not selected:
+            continue
+        account = int(steam_id) - STEAM_ID_BASE
+        if 0 < account < 2**32 and root.joinpath("userdata", str(account), "config").is_dir():
+            # Automatic logins reuse Timestamp; use the file revision instead.
+            return str(account), str(login_file.stat().st_mtime_ns)
+    return None
+
+
+def has_updater(path):
+    if not path.exists():
+        return False
+    with path.open("rb") as stream:
+        shortcuts = lowercase_keys(vdf.binary_load(stream))["shortcuts"]
+    return any(item.get("exe", "").strip('"') == EXECUTABLE
+               or item.get("shortcutpath") == LAUNCHER for item in shortcuts.values())
+
+
+def save_state(path, value):
+    with tempfile.NamedTemporaryFile(mode="w", dir=path.parent, delete=False) as stream:
+        temporary = Path(stream.name)
+        try:
+            json.dump(value, stream)
+            stream.flush()
+            os.replace(temporary, path)
+        finally:
+            temporary.unlink(missing_ok=True)
+
+
+def setup(home, state_dir, now):
+    launch = steam_process(home)
+    if launch is None:
+        return "idle"
+    root = home / ".steam/steam"
+    login = active_account(home, root)
+    if login is None:
+        return "waiting"
+    account, revision = login
+    state_file = state_dir / f"{account}.json"
+    state = json.loads(state_file.read_text()) if state_file.exists() else {}
+    if state.get("registered"):
+        return "done"  # Respect a shortcut the user subsequently removes.
+    if has_updater(root / "userdata" / account / "config/shortcuts.vdf"):
+        save_state(state_file, {"registered": True})
+        return "done"
+    token = f"{launch}:{revision}"
+    if state.get("login") != token:
+        state = {"login": token, "attempts": 0, "requested_at": -RETRY_SECONDS}
+    if now - state["requested_at"] < RETRY_SECONDS:
+        return "waiting"
+    if state["attempts"] >= MAX_ATTEMPTS:
+        return "exhausted"
+    if steam_process(home) != launch or active_account(home, root) != login:
+        return "waiting"
+    state.update(attempts=state["attempts"] + 1, requested_at=now)
+    save_state(state_file, state)
+    subprocess.run([ADD_SHORTCUT_HELPER, LAUNCHER], check=True, timeout=10)
+    return "waiting"
+
+
+def register(home, state_dir):
+    deadline = time.monotonic() + SETUP_SECONDS
+    last_error = None
+    while time.monotonic() < deadline:
+        try:
+            result = setup(home, state_dir, time.monotonic())
+            last_error = None
+            if result in ("idle", "done"):
+                return
+            if result == "exhausted":
+                print("Updater shortcut was not confirmed after three requests; "
+                      "setup will retry at the next Steam login.", file=sys.stderr)
+                return
+        except FileNotFoundError:
+            last_error = None
+        except (OSError, ValueError, KeyError, SyntaxError, subprocess.SubprocessError) as error:
+            # Steam may be writing its login or shortcut files during this check.
+            last_error = type(error).__name__
+        time.sleep(CHECK_SECONDS)
+    if last_error:
+        print(f"Updater shortcut setup deferred: {last_error}", file=sys.stderr)
+
+
+def main():
+    if os.getuid() == 0:
+        return 1
+    home = Path.home()
+    state_dir = Path(os.environ.get("XDG_STATE_HOME", home / ".local/state")) / "cachyos-handheld/steam-updater"
+    state_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
+    with state_dir.joinpath(".lock").open("w") as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            return 0
+        register(home, state_dir)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

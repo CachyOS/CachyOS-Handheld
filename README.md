@@ -63,6 +63,24 @@ This generally already works, but swichting the gamesession on Desktops could sh
 
 ## Additonal Information
 
+### How can I update without leaving Gaming Mode?
+
+**Update CachyOS** is added to the Non-Steam games library automatically.
+To add it again manually, run:
+
+```
+steamos-add-to-steam /usr/share/applications/cachyos-handheld-update.desktop
+```
+
+To disable automatic setup for every user, run
+`sudo systemctl --global disable cachyos-handheld-updater-setup.path`.
+That change takes effect at the next user-session start.
+For just your account, run
+`systemctl --user mask --now cachyos-handheld-updater-setup.path cachyos-handheld-updater-setup.service`.
+
+Then launch **Update CachyOS** from Steam's Library in Gaming Mode. It opens a
+full-screen terminal running `cachy-update`. Steam + X opens the on-screen keyboard.
+
 ### How can I permanently boot to Desktop Mode?
 
 The default handheld behavior starts the Gamescope session on every fresh boot.
